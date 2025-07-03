@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 function App() {
   const [seats, setSeats] = useState([]);
   const [requestedSeats, setRequestedSeats] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
   const [bookings, setBookings] = useState([]);
 
   // Fetch seats data
@@ -16,7 +17,7 @@ function App() {
       setSeats(data);
     } catch (error) {
       console.error('Error fetching seats:', error);
-      setMessage('Error loading seats data');
+      toast.error('Error loading seats data');
     }
   };
 
@@ -34,12 +35,11 @@ function App() {
   // Book seats
   const bookSeats = async () => {
     if (requestedSeats < 1 || requestedSeats > 7) {
-      setMessage('Please enter a number between 1 and 7');
+      toast.error('Please enter a number between 1 and 7');
       return;
     }
 
     setLoading(true);
-    setMessage('');
 
     try {
       const response = await fetch('/api/book', {
@@ -53,14 +53,14 @@ function App() {
       const data = await response.json();
 
       if (data.success) {
-        setMessage(`✅ ${data.message}! Seat numbers: ${data.seat_numbers.join(', ')}`);
+        toast.success(`${data.message}! Seat numbers: ${data.seat_numbers.join(', ')}`);
         fetchSeats();
         fetchBookings();
       } else {
-        setMessage(`❌ ${data.error}`);
+        toast.error(data.error);
       }
     } catch (error) {
-      setMessage('❌ Error booking seats. Please try again.');
+      toast.error('Error booking seats. Please try again.');
       console.error('Error booking seats:', error);
     }
 
@@ -73,11 +73,11 @@ function App() {
     try {
       const response = await fetch('/api/reset', { method: 'POST' });
       const data = await response.json();
-      setMessage(`✅ ${data.message}`);
+      toast.success(data.message);
       fetchSeats();
       fetchBookings();
     } catch (error) {
-      setMessage('❌ Error resetting bookings');
+      toast.error('Error resetting bookings');
       console.error('Error resetting:', error);
     }
     setLoading(false);
@@ -156,7 +156,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🚂 Train Seat Booking System</h1>
+        <h1>Train Seat Booking System</h1>
         <p>Coach with 80 seats (11 rows of 7 seats + 1 row of 3 seats)</p>
       </header>
 
@@ -181,16 +181,15 @@ function App() {
               disabled={loading}
               className="book-button"
             >
-              {loading ? '⏳ Booking...' : '🎫 Book Seats'}
+              {loading ? 'Booking...' : 'Book Seats'}
             </button>
             <button 
               onClick={resetBookings} 
               disabled={loading}
               className="reset-button"
             >
-              {loading ? '⏳ Resetting...' : '🔄 Reset All Bookings'}
+              {loading ? 'Resetting...' : 'Reset All Bookings'}
             </button>
-            {message && <div className="message">{message}</div>}
           </div>
 
           <div className="stats">
@@ -248,6 +247,19 @@ function App() {
           </div>
         </div>
       </main>
+      
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
