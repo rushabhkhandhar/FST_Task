@@ -34,15 +34,14 @@
 }
 
 .main-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 1rem 2rem;
   display: grid;
   gap: 2rem;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 300px 1fr minmax(250px, 400px);
   grid-template-areas: 
-    "booking seat-map"
-    "booking bookings";
+    "booking seat-map bookings";
 }
 
 .booking-section {
@@ -276,16 +275,26 @@
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
   border: 1px solid rgba(255, 255, 255, 0.18);
+  min-height: 300px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .bookings-section h2 {
   margin-bottom: 1rem;
   color: #2c3e50;
+  text-align: center;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
 }
 
 .bookings-list {
-  max-height: 300px;
+  flex: 1;
   overflow-y: auto;
+  min-height: 200px;
 }
 
 .booking-item {
@@ -295,6 +304,25 @@
   padding: 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 0.9rem;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.booking-item:hover {
+  background: rgba(52, 152, 219, 0.1);
+  transform: translateX(5px);
+}
+
+.latest-booking {
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .booking-id {
@@ -312,7 +340,42 @@
   font-size: 0.8rem;
 }
 
+.booking-count {
+  background: #3498db;
+  color: white;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  margin-left: 0.5rem;
+}
+
+.no-bookings {
+  text-align: center;
+  padding: 2rem;
+  color: #7f8c8d;
+}
+
+.booking-hint {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .main-content {
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: 
+      "booking seat-map"
+      "bookings bookings";
+  }
+  
+  .bookings-section {
+    min-height: 250px !important;
+    max-height: 400px !important;
+  }
+}
+
 @media (max-width: 1024px) {
   .main-content {
     grid-template-columns: 1fr;
@@ -324,6 +387,11 @@
   
   .booking-section {
     flex-direction: row;
+  }
+  
+  .bookings-section {
+    min-height: 200px !important;
+    max-height: 350px !important;
   }
 }
 

@@ -148,6 +148,16 @@ function App() {
   const bookedSeats = seats.filter(seat => seat.is_booked).length;
   const availableSeats = totalSeats - bookedSeats;
 
+  // Dynamic styling for bookings section
+  const getBookingsStyle = () => {
+    const bookingCount = bookings.length;
+    if (bookingCount === 0) return { minHeight: '200px' };
+    if (bookingCount <= 3) return { minHeight: '300px' };
+    if (bookingCount <= 6) return { minHeight: '400px' };
+    if (bookingCount <= 10) return { minHeight: '500px' };
+    return { minHeight: '600px', maxHeight: '80vh' };
+  };
+
   useEffect(() => {
     fetchSeats();
     fetchBookings();
@@ -226,14 +236,17 @@ function App() {
           </div>
         </div>
 
-        <div className="bookings-section">
-          <h2>Recent Bookings</h2>
+        <div className="bookings-section" style={getBookingsStyle()}>
+          <h2>Recent Bookings {bookings.length > 0 && <span className="booking-count">({bookings.length})</span>}</h2>
           <div className="bookings-list">
             {bookings.length === 0 ? (
-              <p>No bookings yet</p>
+              <div className="no-bookings">
+                <p>No bookings yet</p>
+                <p className="booking-hint">Book some seats to see them here!</p>
+              </div>
             ) : (
-              bookings.map((booking) => (
-                <div key={booking.id} className="booking-item">
+              bookings.map((booking, index) => (
+                <div key={booking.id} className={`booking-item ${index === 0 ? 'latest-booking' : ''}`}>
                   <span className="booking-id">{booking.booking_id}</span>
                   <span className="booking-seats">
                     {booking.seats_count} seat(s): {JSON.parse(booking.seat_numbers).join(', ')}
