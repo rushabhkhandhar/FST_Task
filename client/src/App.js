@@ -10,7 +10,7 @@ function App() {
   const [bookings, setBookings] = useState([]);
 
   // API base URL
-  const API_URL = process.env.REACT_APP_API_URL || '';
+  const API_URL = process.env.REACT_APP_API_URL || 'https://fst-task.onrender.com';
 
   // Fetch seats data
   const fetchSeats = async () => {
