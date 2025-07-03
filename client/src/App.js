@@ -9,10 +9,13 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState([]);
 
+  // API base URL
+  const API_URL = process.env.REACT_APP_API_URL || '';
+
   // Fetch seats data
   const fetchSeats = async () => {
     try {
-      const response = await fetch('/api/seats');
+      const response = await fetch(`${API_URL}/api/seats`);
       const data = await response.json();
       setSeats(data);
     } catch (error) {
@@ -24,7 +27,7 @@ function App() {
   // Fetch bookings
   const fetchBookings = async () => {
     try {
-      const response = await fetch('/api/bookings');
+      const response = await fetch(`${API_URL}/api/bookings`);
       const data = await response.json();
       setBookings(data.slice(0, 10)); // Show last 10 bookings
     } catch (error) {
@@ -42,7 +45,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/book', {
+      const response = await fetch(`${API_URL}/api/book`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +74,7 @@ function App() {
   const resetBookings = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/reset', { method: 'POST' });
+      const response = await fetch(`${API_URL}/api/reset`, { method: 'POST' });
       const data = await response.json();
       toast.success(data.message);
       fetchSeats();
