@@ -4,7 +4,13 @@ A web-based train seat booking system built with React and Node.js.
 
 ## Quick Start
 
-1. **Install dependencies:**
+1. **Clone the repository:**
+```bash
+git clone https://github.com/rushabhkhandhar/FST_Task.git
+cd FST_Task
+```
+
+2. **Install dependencies:**
 ```bash
 # Install server dependencies
 cd server
@@ -15,7 +21,7 @@ cd ../client
 npm install
 ```
 
-2. **Development mode:**
+3. **Development mode:**
 ```bash
 # Terminal 1: Start backend server
 cd server
@@ -26,7 +32,7 @@ cd client
 npm start
 ```
 
-3. **Production build:**
+4. **Production build:**
 ```bash
 cd client
 npm run build
