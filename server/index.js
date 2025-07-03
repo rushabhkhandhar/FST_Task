@@ -176,7 +176,7 @@ app.post('/api/book', (req, res) => {
   const { seats_count } = req.body;
   
   if (!seats_count || seats_count < 1 || seats_count > 7) {
-    return res.status(400).json({ error: 'Seats count must be between 1 and 7' });
+    return res.status(400).json({ error: 'Number of passengers must be between 1 and 7' });
   }
 
   findBestSeats(seats_count, (err, selectedSeats) => {
@@ -213,7 +213,7 @@ app.post('/api/book', (req, res) => {
           success: true,
           booking_id: bookingId,
           seat_numbers: seatNumbers,
-          message: `Successfully booked ${seats_count} seat(s)`
+          message: `Successfully reserved ${seats_count} seat(s)`
         });
       });
     });
@@ -243,7 +243,7 @@ app.post('/api/reset', (req, res) => {
         db.run("UPDATE seats SET is_booked = TRUE, booking_id = ? WHERE seat_number = ?", 
           [`INITIAL_${seatNum}`, seatNum]);
       });
-      res.json({ message: 'Database reset successfully' });
+      res.json({ message: 'System reset successfully' });
     }, 100);
   });
 });

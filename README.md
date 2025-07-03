@@ -1,6 +1,6 @@
-# Train Seat Booking System
+# Railway Seat Reservation System
 
-A web-based train seat booking system built with React and Node.js.
+A professional web-based railway seat reservation system built with React and Node.js, featuring intelligent seat allocation algorithms.
 
 ## Quick Start
 
@@ -43,21 +43,23 @@ npm start
 
 ## Features
 
-- 80 seats arranged in 12 rows (11 rows of 7 seats + 1 row of 3 seats)
-- Smart seat allocation algorithm
-- Real-time seat map visualization
-- Modern UI with toast notifications
-- SQLite database
+- **Smart Allocation**: 80 seats arranged in 12 rows (11 rows × 7 seats + 1 row × 3 seats)
+- **Intelligent Algorithm**: Priority-based seat allocation (same row → nearby seats)
+- **Real-time Visualization**: Interactive seat map with live status updates
+- **Professional UI**: Modern interface with toast notifications
+- **Data Persistence**: SQLite database for reliable booking storage
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 
 ## API Endpoints
 
-- `GET /api/seats` - Get all seats
-- `POST /api/book` - Book seats (1-7 at a time)  
-- `GET /api/bookings` - Get booking history
-- `POST /api/reset` - Reset all bookings
+- `GET /api/seats` - Retrieve all seat statuses
+- `POST /api/book` - Reserve seats (1-7 passengers per transaction)  
+- `GET /api/bookings` - Get reservation history
+- `POST /api/reset` - Reset system (development/testing)
 
 ## Tech Stack
 
-- **Frontend**: React, CSS3, React-Toastify
-- **Backend**: Node.js, Express, SQLite3
-- **Database**: SQLite (file-based)
+- **Frontend**: React 18, CSS3, React-Toastify
+- **Backend**: Node.js, Express.js, SQLite3
+- **Database**: SQLite (file-based, production-ready)
+- **Deployment**: Ready for cloud platforms (Vercel, Railway, Heroku)

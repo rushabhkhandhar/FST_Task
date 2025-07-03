@@ -17,7 +17,7 @@ function App() {
       setSeats(data);
     } catch (error) {
       console.error('Error fetching seats:', error);
-      toast.error('Error loading seats data');
+      toast.error('Unable to load seat data');
     }
   };
 
@@ -35,7 +35,7 @@ function App() {
   // Book seats
   const bookSeats = async () => {
     if (requestedSeats < 1 || requestedSeats > 7) {
-      toast.error('Please enter a number between 1 and 7');
+      toast.error('Please select between 1 and 7 passengers');
       return;
     }
 
@@ -53,14 +53,14 @@ function App() {
       const data = await response.json();
 
       if (data.success) {
-        toast.success(`${data.message}! Seat numbers: ${data.seat_numbers.join(', ')}`);
+        toast.success(`Reservation confirmed! Allocated seats: ${data.seat_numbers.join(', ')}`);
         fetchSeats();
         fetchBookings();
       } else {
         toast.error(data.error);
       }
     } catch (error) {
-      toast.error('Error booking seats. Please try again.');
+      toast.error('Reservation failed. Please try again.');
       console.error('Error booking seats:', error);
     }
 
@@ -77,7 +77,7 @@ function App() {
       fetchSeats();
       fetchBookings();
     } catch (error) {
-      toast.error('Error resetting bookings');
+      toast.error('System reset failed');
       console.error('Error resetting:', error);
     }
     setLoading(false);
@@ -166,16 +166,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Train Seat Booking System</h1>
-        <p>Coach with 80 seats (11 rows of 7 seats + 1 row of 3 seats)</p>
+        <h1>Railway Seat Reservation System</h1>
+        <p>Intelligent seat allocation for train coach with 80 seats (11 rows × 7 seats + 1 row × 3 seats)</p>
       </header>
 
       <main className="main-content">
         <div className="booking-section">
           <div className="booking-form">
-            <h2>Book Your Seats</h2>
+            <h2>Seat Reservation</h2>
             <div className="form-group">
-              <label htmlFor="seatCount">Number of seats (1-7):</label>
+              <label htmlFor="seatCount">Number of passengers (1-7):</label>
               <input
                 type="number"
                 id="seatCount"
@@ -191,21 +191,21 @@ function App() {
               disabled={loading}
               className="book-button"
             >
-              {loading ? 'Booking...' : 'Book Seats'}
+              {loading ? 'Processing...' : 'Reserve Seats'}
             </button>
             <button 
               onClick={resetBookings} 
               disabled={loading}
               className="reset-button"
             >
-              {loading ? 'Resetting...' : 'Reset All Bookings'}
+              {loading ? 'Resetting...' : 'Reset System'}
             </button>
           </div>
 
           <div className="stats">
-            <h3>Seat Statistics</h3>
+            <h3>Occupancy Status</h3>
             <div className="stat-item">
-              <span className="stat-label">Total Seats:</span>
+              <span className="stat-label">Total Capacity:</span>
               <span className="stat-value">{totalSeats}</span>
             </div>
             <div className="stat-item">
@@ -213,14 +213,14 @@ function App() {
               <span className="stat-value available">{availableSeats}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">Booked:</span>
+              <span className="stat-label">Reserved:</span>
               <span className="stat-value booked">{bookedSeats}</span>
             </div>
           </div>
         </div>
 
         <div className="seat-map-section">
-          <h2>Seat Map</h2>
+          <h2>Coach Layout</h2>
           <div className="legend">
             <div className="legend-item">
               <div className="seat available"></div>
@@ -228,7 +228,7 @@ function App() {
             </div>
             <div className="legend-item">
               <div className="seat booked"></div>
-              <span>Booked</span>
+              <span>Reserved</span>
             </div>
           </div>
           <div className="seat-map">
@@ -237,19 +237,19 @@ function App() {
         </div>
 
         <div className="bookings-section" style={getBookingsStyle()}>
-          <h2>Recent Bookings {bookings.length > 0 && <span className="booking-count">({bookings.length})</span>}</h2>
+          <h2>Reservation History {bookings.length > 0 && <span className="booking-count">({bookings.length})</span>}</h2>
           <div className="bookings-list">
             {bookings.length === 0 ? (
               <div className="no-bookings">
-                <p>No bookings yet</p>
-                <p className="booking-hint">Book some seats to see them here!</p>
+                <p>No reservations yet</p>
+                <p className="booking-hint">Reserve seats to view transaction history</p>
               </div>
             ) : (
               bookings.map((booking, index) => (
                 <div key={booking.id} className={`booking-item ${index === 0 ? 'latest-booking' : ''}`}>
                   <span className="booking-id">{booking.booking_id}</span>
                   <span className="booking-seats">
-                    {booking.seats_count} seat(s): {JSON.parse(booking.seat_numbers).join(', ')}
+                    {booking.seats_count} passenger(s): Seats {JSON.parse(booking.seat_numbers).join(', ')}
                   </span>
                   <span className="booking-time">
                     {new Date(booking.created_at).toLocaleString()}
