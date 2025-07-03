@@ -2,7 +2,6 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,7 +12,6 @@ app.use(cors({
   credentials: true
 }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../client/build')));
 
 // Database setup
 const db = new sqlite3.Database('./train_booking.db');
@@ -249,11 +247,6 @@ app.post('/api/reset', (req, res) => {
       res.json({ message: 'System reset successfully' });
     }, 100);
   });
-});
-
-// Serve React app for any other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 // Initialize database and start server
