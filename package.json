@@ -1,0 +1,20 @@
+{
+  "name": "train-seat-booking-system",
+  "version": "1.0.0",
+  "description": "A train seat booking system with 80 seats per coach",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "keywords": ["train", "booking", "seats", "reservation", "react", "nodejs"],
+  "author": "Your Name",
+  "license": "MIT"
+}
